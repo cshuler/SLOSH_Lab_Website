@@ -1,0 +1,25 @@
+<link rel="stylesheet" href="/css/style.css">
+
+<nav>
+  <a href="../" class="nav-brand">SLOSH</a>
+  <div class="nav-links">
+    <a href="../team/">Team</a>
+    <a href="./" class="active">Projects</a>
+    <a href="../publications/">Publications</a>
+  </div>
+</nav>
+
+<div class="content-container">
+<h1>Projects</h1>
+
+{% for row in projects %}
+<div class="project-card">
+  <h3>{{ row["Project name"] }}</h3>
+  
+  {% if row["Description"] %}<p><strong>Description:</strong> {{ row["Description"] }}</p>{% endif %}
+  {% if row["Team members"] %}<p><strong>Team Members:</strong> {{ row["Team members"] }}</p>{% endif %}
+  {% if row["Relevant links"] %}<p><a href="{{ row["Relevant links"] }}" class="project-card-link">View Project</a></p>{% endif %}
+</div>
+
+{% endfor %}
+</div>

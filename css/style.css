@@ -1,0 +1,143 @@
+/* Global Styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Content Container */
+.content-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* Navigation Bar */
+nav {
+  background-color: #333;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-brand {
+  padding: 15px 20px;
+  color: white;
+  text-decoration: none;
+  background-color: #333;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.nav-brand:hover {
+  background-color: #444;
+}
+
+.nav-links {
+  display: flex;
+  gap: 0;
+}
+
+.nav-links a {
+  padding: 15px 20px;
+  color: white;
+  text-decoration: none;
+  background-color: #333;
+  border-right: 1px solid #555;
+  transition: background-color 0.2s;
+}
+
+.nav-links a:last-child {
+  border-right: none;
+}
+
+.nav-links a:hover {
+  background-color: #444;
+}
+
+.nav-links a.active {
+  font-weight: bold;
+}
+
+/* Page Headings */
+h1 {
+  text-align: center;
+}
+
+/* Team Cards */
+.team-card {
+  margin: 20px 0;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: auto;
+}
+
+.team-card-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+  float: left;
+  margin-right: 15px;
+}
+
+.team-card-clearfix {
+  clear: both;
+}
+
+.team-card-link {
+  color: #0077b5;
+  text-decoration: none;
+}
+
+.team-card-link:hover {
+  text-decoration: underline;
+}
+
+/* Project Cards */
+.project-card {
+  margin: 20px 0;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.project-card h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.project-card p {
+  margin: 10px 0;
+}
+
+.project-card-link {
+  color: #0077b5;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 10px;
+}
+
+.project-card-link:hover {
+  text-decoration: underline;
+}
+
+/* Publication Cards */
+.publication-card {
+  margin: 20px 0;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.publication-card h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.publication-card p {
+  margin: 10px 0;
+}
