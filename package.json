@@ -1,0 +1,24 @@
+{
+  "name": "schulerlabwebsite",
+  "version": "1.0.0",
+  "description": "Build and content files for SLOSH Lab website",
+  "main": ".eleventy.js",
+  "scripts": {
+    "start": "eleventy --serve",
+    "build": "eleventy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cshuler/SLOSH_Lab_Website.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cshuler/SLOSH_Lab_Website/issues"
+  },
+  "homepage": "https://github.com/cshuler/SLOSH_Lab_Website#readme",
+  "dependencies": {
+    "@11ty/eleventy": "^3.1.2"
+  }
+}
