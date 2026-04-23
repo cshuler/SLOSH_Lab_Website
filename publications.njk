@@ -1,23 +1,54 @@
 <link rel="stylesheet" href="{{ '/css/style.css' | url }}">
 
-<nav>
-  <a href="../" class="nav-brand">SLOSH</a>
-  <div class="nav-links">
-    <a href="../team/">Team</a>
-    <a href="../projects/">Projects</a>
-    <a href="./" class="active">Publications</a>
-  </div>
-</nav>
+<div class="site-wrap">
+  <nav class="site-nav">
+    <a href="../" class="nav-brand">SLOSH LAB</a>
+    <div class="nav-links">
+      <a href="../">Home</a>
+      <a href="../projects/">Projects</a>
+      <a href="./" class="active">Publications</a>
+      <a href="../gallery/">Gallery</a>
+      <a href="../team/">Team</a>
+    </div>
+  </nav>
 
-<div class="content-container">
-<h1>Publications</h1>
+  <main class="page-main">
+    <section class="section">
+      <h1>Publications</h1>
+      <p class="section-subtitle">Browse outputs by topic or year with quick navigation.</p>
 
-{% for row in publications %}
-<div class="publication-card">
-  <h3>{{ row["Title"] }}</h3>
-  
-  {% if row["Details"] %}<p>{{ row["Details"] }}</p>{% endif %}
-</div>
+      {% if publicationGroups and publicationGroups.length %}
+      <div class="pill-row" style="margin-bottom: 26px;">
+        {% for group in publicationGroups %}
+        <a class="pill" href="#{{ group.id }}">{{ group.label }}</a>
+        {% endfor %}
+      </div>
 
-{% endfor %}
+      {% for group in publicationGroups %}
+      <section id="{{ group.id }}" class="publication-section">
+        <h2 class="divider-title">{{ group.label }}</h2>
+        <div class="publication-list">
+          {% for item in group.items %}
+          <article class="publication-item">
+            <h3>{{ item.title }}</h3>
+            {% if item.details %}
+            <p>{{ item.details }}</p>
+            {% else %}
+            <p class="muted">Details coming soon.</p>
+            {% endif %}
+          </article>
+          {% endfor %}
+        </div>
+      </section>
+      {% endfor %}
+      {% else %}
+      <article class="card">
+        <h3>Publication list in progress</h3>
+        <p>
+          
+        </p>
+      </article>
+      {% endif %}
+    </section>
+  </main>
 </div>

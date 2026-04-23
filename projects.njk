@@ -1,25 +1,67 @@
 <link rel="stylesheet" href="{{ '/css/style.css' | url }}">
 
-<nav>
-  <a href="../" class="nav-brand">SLOSH</a>
-  <div class="nav-links">
-    <a href="../team/">Team</a>
-    <a href="./" class="active">Projects</a>
-    <a href="../publications/">Publications</a>
-  </div>
-</nav>
+<div class="site-wrap">
+  <nav class="site-nav">
+    <a href="../" class="nav-brand">SLOSH LAB</a>
+    <div class="nav-links">
+      <a href="../">Home</a>
+      <a href="./" class="active">Projects</a>
+      <a href="../publications/">Publications</a>
+      <a href="../gallery/">Gallery</a>
+      <a href="../team/">Team</a>
+    </div>
+  </nav>
 
-<div class="content-container">
-<h1>Projects</h1>
+  <main class="page-main">
+    <section class="section">
+      <h1>Projects</h1>
+      <p class="section-subtitle">Long-running initiatives and our full project archive.</p>
 
-{% for row in projects %}
-<div class="project-card">
-  <h3>{{ row["Project name"] }}</h3>
-  
-  {% if row["Description"] %}<p><strong>Description:</strong> {{ row["Description"] }}</p>{% endif %}
-  {% if row["Team members"] %}<p><strong>Team Members:</strong> {{ row["Team members"] }}</p>{% endif %}
-  {% if row["Relevant links"] %}<p><a href="{{ row["Relevant links"] }}" class="project-card-link">View Project</a></p>{% endif %}
-</div>
+      <h2 class="divider-title">Long-running projects</h2>
+      <div class="grid grid-3">
+        {% for row in projects %}
+        {% if loop.index <= 3 %}
+        <article class="card featured-project">
+          <h3>{{ row["Project name"] or "Project in development" }}</h3>
+          <p>
+            {% if row["Description"] %}
+              {{ row["Description"] }}
+            {% else %}
+              Active collaboration focused on applied science tools for water resilience in Hawaii and the Pacific.
+            {% endif %}
+          </p>
+          {% if row["Team members"] %}
+          <p class="muted" style="margin-top: 12px;"><strong>Team:</strong> {{ row["Team members"] }}</p>
+          {% endif %}
+          {% if row["Relevant links"] %}
+          <p style="margin-top: 12px;"><a class="pill" href="{{ row["Relevant links"] }}">Learn more</a></p>
+          {% endif %}
+        </article>
+        {% endif %}
+        {% endfor %}
+      </div>
 
-{% endfor %}
+      <h2 class="divider-title">All current and previous projects</h2>
+      <div class="grid">
+        {% for row in projects %}
+        <article class="card">
+          <h3>{{ row["Project name"] or "Untitled project" }}</h3>
+          {% if row["Description"] %}
+          <p>{{ row["Description"] }}</p>
+          {% else %}
+          <p class="muted">Description coming soon.</p>
+          {% endif %}
+
+          {% if row["Team members"] %}
+          <p class="muted" style="margin-top: 8px;"><strong>Team members:</strong> {{ row["Team members"] }}</p>
+          {% endif %}
+
+          {% if row["Relevant links"] %}
+          <p style="margin-top: 12px;"><a class="pill" href="{{ row["Relevant links"] }}">Project link</a></p>
+          {% endif %}
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
 </div>

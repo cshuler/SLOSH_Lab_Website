@@ -1,21 +1,81 @@
 <link rel="stylesheet" href="{{ '/css/style.css' | url }}">
 
-<nav>
-  <a href="./" class="nav-brand">SLOSH</a>
-  <div class="nav-links">
-    <a href="team/">Team</a>
-    <a href="projects/">Projects</a>
-    <a href="publications/">Publications</a>
-  </div>
-</nav>
+<div class="site-wrap">
+    <nav class="site-nav">
+        <a href="./" class="nav-brand">SLOSH LAB</a>
+        <div class="nav-links">
+            <a href="./" class="active">Home</a>
+            <a href="projects/">Projects</a>
+            <a href="publications/">Publications</a>
+            <a href="gallery/">Gallery</a>
+            <a href="team/">Team</a>
+        </div>
+    </nav>
 
-<div class="content-container">
-<h1>SLOSH</h1>
+    <header class="hero" style="background-image: url('https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1600&q=80');">
+        <div class="hero-inner">
+            <p class="hero-kicker">Shuler Lab for Occupational Science and Hydrology</p>
+            <h1>Science with communities for resilient Pacific watersheds.</h1>
+            <p>
+                We combine environmental engineering, geospatial analysis, and applied data tools to support
+                climate adaptation, flood readiness, and equitable water decisions across Hawaii and the Pacific.
+            </p>
+            <div class="hero-actions">
+                <a class="button button-primary" href="projects/">Explore Projects</a>
+                <a class="button button-secondary" href="team/">Meet the Team</a>
+            </div>
+        </div>
+    </header>
 
-<h2>About</h2>
+    <main class="page-main">
+        <section class="section two-col">
+            <article class="surface-card">
+                <h2>Our mission</h2>
+                <p>
+                    SLOSH develops practical, open, and community-centered water science. We work alongside local
+                    partners to turn technical climate, stream, and infrastructure information into tools people can
+                    use for planning and action.
+                </p>
+                <p>
+                    Our projects span machine learning for flood awareness, climate data portals, wastewater planning,
+                    and policy-grounded support for local governance.
+                </p>
+            </article>
 
-<h3>Contact Us</h3>
-</div>
+            <aside class="surface-card">
+                <h2>Focus areas</h2>
+                <div class="pill-row">
+                    <span class="pill">Flood Risk Intelligence</span>
+                    <span class="pill">Climate Data Access</span>
+                    <span class="pill">Water Quality & Infrastructure</span>
+                    <span class="pill">GIS Decision Support</span>
+                    <span class="pill">Community Partnerships</span>
+                    <span class="pill">Open Reproducible Science</span>
+                </div>
+            </aside>
+        </section>
+
+        <section class="section">
+            <h2>Current priorities</h2>
+            <p class="section-subtitle">
+                These themes guide our active collaborations across university, agency, and community partners.
+            </p>
+            <div class="grid grid-3">
+                <article class="card">
+                    <h3>American Samoa climate intelligence</h3>
+                    <p>Building accessible dashboards and forecast tools to support adaptation planning.</p>
+                </article>
+                <article class="card">
+                    <h3>Wastewater and watershed planning</h3>
+                    <p>Integrating environmental, social, and infrastructure data to prioritize investments.</p>
+                </article>
+                <article class="card">
+                    <h3>AI for stream monitoring</h3>
+                    <p>Using camera and sensor data to improve stream condition awareness in real time.</p>
+                </article>
+            </div>
+        </section>
+    </main>
 
 <footer class="site-footer">
     <div class="footer-inner">
@@ -54,3 +114,4 @@
         </div>
     </div>
 </footer>
+</div>

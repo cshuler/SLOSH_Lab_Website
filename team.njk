@@ -1,34 +1,50 @@
 <link rel="stylesheet" href="{{ '/css/style.css' | url }}">
 
-<nav>
-  <a href="../" class="nav-brand">SLOSH</a>
-  <div class="nav-links">
-    <a href="./" class="active">Team</a>
-    <a href="../projects/">Projects</a>
-    <a href="../publications/">Publications</a>
-  </div>
-</nav>
+<div class="site-wrap">
+  <nav class="site-nav">
+    <a href="../" class="nav-brand">SLOSH LAB</a>
+    <div class="nav-links">
+      <a href="../">Home</a>
+      <a href="../projects/">Projects</a>
+      <a href="../publications/">Publications</a>
+      <a href="../gallery/">Gallery</a>
+      <a href="./" class="active">Team</a>
+    </div>
+  </nav>
 
-<div class="content-container">
-<h1>Meet the Team</h1>
+  <main class="page-main">
+    <section class="section">
+      <h1>Team</h1>
+      <p class="section-subtitle">Organized by role across undergraduate, graduate, postdoctoral, and staff contributors.</p>
 
-{% for row in team %}
-<div class="team-card">
-  {% if row["Image"] %}
-  <img src="/images/team/{{ row['Image'] }}" alt="{{ row['First Name'] }} {{ row['Last Name'] }}" class="team-card-image">
-  {% endif %}
-  
-  <h3>{{ row["First Name"] }} {{ row["Last Name"] }}</h3>
-  
-  <p><strong>Title:</strong> {{ row["Title"] }}</p>
-  <p>{{ row["Description"] }}</p>
-  
-  {% if row["LinkedIn"] %}
-  <p><a href="{{ row['LinkedIn'] }}" class="team-card-link">LinkedIn Profile</a></p>
-  {% endif %}
-  
-  <div class="team-card-clearfix"></div>
-</div>
+      {% for group in teamGroups %}
+      <section class="team-group">
+        <h2 class="divider-title">{{ group.name }}</h2>
 
-{% endfor %}
+        <div class="grid grid-2">
+          {% for member in group.members %}
+          <article class="card team-person">
+            {% if member.image %}
+            <img src="{{ ('/images/team/' ~ member.image) | url }}" alt="{{ member.firstName }} {{ member.lastName }}" class="team-image">
+            {% else %}
+            <div class="team-image" style="background: linear-gradient(130deg, rgba(20,117,109,0.35), rgba(231,187,98,0.35));"></div>
+            {% endif %}
+
+            <div>
+              <h3>{{ member.firstName }} {{ member.lastName }}</h3>
+              <p class="muted" style="margin-bottom: 8px;"><strong>{{ member.title }}</strong></p>
+              {% if member.description %}
+              <p>{{ member.description }}</p>
+              {% endif %}
+              {% if member.linkedIn %}
+              <p style="margin-top: 10px;"><a class="pill" href="{{ member.linkedIn }}">LinkedIn</a></p>
+              {% endif %}
+            </div>
+          </article>
+          {% endfor %}
+        </div>
+      </section>
+      {% endfor %}
+    </section>
+  </main>
 </div>

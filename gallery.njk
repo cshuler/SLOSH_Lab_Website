@@ -1,0 +1,35 @@
+<link rel="stylesheet" href="{{ '/css/style.css' | url }}">
+
+<div class="site-wrap">
+  <nav class="site-nav">
+    <a href="../" class="nav-brand">SLOSH LAB</a>
+    <div class="nav-links">
+      <a href="../">Home</a>
+      <a href="../projects/">Projects</a>
+      <a href="../publications/">Publications</a>
+      <a href="./" class="active">Gallery</a>
+      <a href="../team/">Team</a>
+    </div>
+  </nav>
+
+  <main class="page-main">
+    <section class="section">
+      <h1>Gallery</h1>
+      <p class="section-subtitle">Field moments, workshops, and data collection snapshots linked to related projects.</p>
+
+      <div class="gallery-grid">
+        {% for item in gallery %}
+        <article class="gallery-card">
+          <div class="gallery-content">
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.caption }}</p>
+            {% if item.projectUrl %}
+            <p style="margin-top: 12px;"><a class="pill" href="{{ item.projectUrl | url }}">Related project: {{ item.project }}</a></p>
+            {% endif %}
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+</div>
