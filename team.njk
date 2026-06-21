@@ -2,7 +2,9 @@
 
 <div class="site-wrap">
   <nav class="site-nav">
-    <a href="../" class="nav-brand">SLOSH LAB</a>
+    <a href="../" class="nav-brand" aria-label="SLOSH Lab home">
+      <img src="{{ '/images/logo/SLOSH_Logo.png' | url }}" alt="SLOSH Lab" class="nav-logo">
+    </a>
     <div class="nav-links">
       <a href="../">Home</a>
       <a href="../projects/">Projects</a>
@@ -25,7 +27,9 @@
           {% for member in group.members %}
           <article class="card team-person">
             {% if member.image %}
-            <img src="{{ ('/images/team/' ~ member.image) | url }}" alt="{{ member.firstName }} {{ member.lastName }}" class="team-image">
+            <a href="{{ ('/images/team/' ~ member.image) | url }}" class="team-image-link" data-image-preview aria-label="Preview {{ member.firstName }} {{ member.lastName }} photo in full size">
+              <img src="{{ ('/images/team/' ~ member.image) | url }}" alt="{{ member.firstName }} {{ member.lastName }}" class="team-image">
+            </a>
             {% else %}
             <div class="team-image" style="background: linear-gradient(130deg, rgba(20,117,109,0.35), rgba(231,187,98,0.35));"></div>
             {% endif %}
@@ -46,5 +50,99 @@
       </section>
       {% endfor %}
     </section>
+
+    <div class="image-lightbox" data-image-lightbox hidden aria-hidden="true" aria-label="Image preview">
+      <div class="image-lightbox-panel">
+        <button type="button" class="image-lightbox-nav image-lightbox-nav-prev" data-image-lightbox-prev aria-label="Previous image">‹</button>
+        <img class="image-lightbox-image" data-image-lightbox-image alt="">
+        <button type="button" class="image-lightbox-nav image-lightbox-nav-next" data-image-lightbox-next aria-label="Next image">›</button>
+      </div>
+    </div>
   </main>
 </div>
+
+<script>
+  (() => {
+    const links = Array.from(document.querySelectorAll('[data-image-preview]'));
+    const lightbox = document.querySelector('[data-image-lightbox]');
+
+    if (!links.length || !lightbox) {
+      return;
+    }
+
+    let currentIndex = 0;
+    const image = lightbox.querySelector('[data-image-lightbox-image]');
+    const previousButton = lightbox.querySelector('[data-image-lightbox-prev]');
+    const nextButton = lightbox.querySelector('[data-image-lightbox-next]');
+
+    const closeLightbox = () => {
+      lightbox.hidden = true;
+      lightbox.setAttribute('aria-hidden', 'true');
+    };
+
+    const showImage = (index) => {
+      currentIndex = (index + links.length) % links.length;
+      const link = links[currentIndex];
+      const previewImage = link.querySelector('img');
+      image.src = link.href;
+      image.alt = previewImage ? previewImage.alt : '';
+    };
+
+    const openLightbox = (index) => {
+      showImage(index);
+
+      lightbox.hidden = false;
+      lightbox.setAttribute('aria-hidden', 'false');
+    };
+
+    const stepImage = (offset) => {
+      if (lightbox.hidden) {
+        return;
+      }
+
+      showImage(currentIndex + offset);
+    };
+
+    links.forEach((link, index) => {
+      link.addEventListener('click', (event) => {
+        event.preventDefault();
+        openLightbox(index);
+      });
+    });
+
+    previousButton.addEventListener('click', () => stepImage(-1));
+    nextButton.addEventListener('click', () => stepImage(1));
+
+    lightbox.addEventListener('click', (event) => {
+      if (event.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (lightbox.hidden) {
+        return;
+      }
+
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closeLightbox();
+      }
+
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        stepImage(-1);
+      }
+
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        stepImage(1);
+      }
+    });
+
+    lightbox.addEventListener('transitionend', () => {
+      image.removeAttribute('src');
+      image.alt = '';
+    });
+  })();
+</script>

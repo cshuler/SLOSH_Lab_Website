@@ -2,7 +2,9 @@
 
 <div class="site-wrap">
   <nav class="site-nav">
-    <a href="../" class="nav-brand">SLOSH LAB</a>
+    <a href="../" class="nav-brand" aria-label="SLOSH Lab home">
+      <img src="{{ '/images/logo/SLOSH_Logo.png' | url }}" alt="SLOSH Lab" class="nav-logo">
+    </a>
     <div class="nav-links">
       <a href="../">Home</a>
       <a href="../projects/">Projects</a>
@@ -15,21 +17,118 @@
   <main class="page-main">
     <section class="section">
       <h1>Gallery</h1>
-      <p class="section-subtitle">Field moments, workshops, and data collection snapshots linked to related projects.</p>
 
-      <div class="gallery-grid">
-        {% for item in gallery %}
-        <article class="gallery-card">
-          <div class="gallery-content">
-            <h3>{{ item.title }}</h3>
-            <p>{{ item.caption }}</p>
-            {% if item.projectUrl %}
-            <p style="margin-top: 12px;"><a class="pill" href="{{ item.projectUrl | url }}">Related project: {{ item.project }}</a></p>
-            {% endif %}
-          </div>
-        </article>
-        {% endfor %}
-      </div>
+      {% for section in gallery %}
+      <section class="gallery-section">
+        {% if section.title %}
+        <h2 class="divider-title">{{ section.title }}</h2>
+        {% endif %}
+
+        <div class="gallery-grid">
+          {% for item in section.items %}
+          <article class="gallery-card">
+            <a href="{{ item.src | url }}" class="gallery-photo-link" data-image-preview aria-label="Preview {{ item.alt }} in full size">
+              <img src="{{ item.src | url }}" alt="{{ item.alt }}" class="gallery-photo">
+            </a>
+          </article>
+          {% endfor %}
+        </div>
+      </section>
+      {% endfor %}
     </section>
+
+    <div class="image-lightbox" data-image-lightbox hidden aria-hidden="true" aria-label="Image preview">
+      <div class="image-lightbox-panel">
+        <button type="button" class="image-lightbox-nav image-lightbox-nav-prev" data-image-lightbox-prev aria-label="Previous image">‹</button>
+        <img class="image-lightbox-image" data-image-lightbox-image alt="">
+        <button type="button" class="image-lightbox-nav image-lightbox-nav-next" data-image-lightbox-next aria-label="Next image">›</button>
+      </div>
+    </div>
   </main>
 </div>
+
+<script>
+  (() => {
+    const links = Array.from(document.querySelectorAll('[data-image-preview]'));
+    const lightbox = document.querySelector('[data-image-lightbox]');
+
+    if (!links.length || !lightbox) {
+      return;
+    }
+
+    let currentIndex = 0;
+    const image = lightbox.querySelector('[data-image-lightbox-image]');
+    const previousButton = lightbox.querySelector('[data-image-lightbox-prev]');
+    const nextButton = lightbox.querySelector('[data-image-lightbox-next]');
+
+    const closeLightbox = () => {
+      lightbox.hidden = true;
+      lightbox.setAttribute('aria-hidden', 'true');
+    };
+
+    const showImage = (index) => {
+      currentIndex = (index + links.length) % links.length;
+      const link = links[currentIndex];
+      const previewImage = link.querySelector('img');
+      image.src = link.href;
+      image.alt = previewImage ? previewImage.alt : '';
+    };
+
+    const openLightbox = (index) => {
+      showImage(index);
+
+      lightbox.hidden = false;
+      lightbox.setAttribute('aria-hidden', 'false');
+    };
+
+    const stepImage = (offset) => {
+      if (lightbox.hidden) {
+        return;
+      }
+
+      showImage(currentIndex + offset);
+    };
+
+    links.forEach((link, index) => {
+      link.addEventListener('click', (event) => {
+        event.preventDefault();
+        openLightbox(index);
+      });
+    });
+
+    previousButton.addEventListener('click', () => stepImage(-1));
+    nextButton.addEventListener('click', () => stepImage(1));
+
+    lightbox.addEventListener('click', (event) => {
+      if (event.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (lightbox.hidden) {
+        return;
+      }
+
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closeLightbox();
+      }
+
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        stepImage(-1);
+      }
+
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        stepImage(1);
+      }
+    });
+
+    lightbox.addEventListener('transitionend', () => {
+      image.removeAttribute('src');
+      image.alt = '';
+    });
+  })();
+</script>

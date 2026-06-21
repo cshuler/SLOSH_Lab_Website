@@ -52,11 +52,20 @@ body {
 }
 
 .nav-brand {
-  color: var(--white);
+  display: inline-flex;
+  align-items: center;
   text-decoration: none;
-  letter-spacing: 0.08em;
-  font-weight: 800;
-  font-size: 20px;
+  flex-shrink: 0;
+  padding: 6px 12px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 6px 16px rgba(7, 29, 45, 0.2);
+}
+
+.nav-logo {
+  display: block;
+  height: 42px;
+  width: auto;
 }
 
 .nav-links {
@@ -204,6 +213,11 @@ body {
   gap: 10px;
 }
 
+.publication-topic-nav {
+  justify-content: center;
+  margin-bottom: 26px;
+}
+
 .pill {
   display: inline-block;
   padding: 8px 14px;
@@ -300,21 +314,25 @@ body {
   overflow: hidden;
   background: var(--white);
   box-shadow: var(--card-shadow);
-}
-
-.gallery-image-wrap {
   aspect-ratio: 4 / 3;
-  background: linear-gradient(130deg, rgba(20, 117, 109, 0.35), rgba(231, 187, 98, 0.35));
 }
 
-.gallery-image {
+.gallery-photo-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: zoom-in;
+}
+
+.gallery-photo {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  display: block;
 }
 
-.gallery-content {
-  padding: 14px;
+.gallery-section + .gallery-section {
+  margin-top: 34px;
 }
 
 .team-group {
@@ -329,14 +347,106 @@ body {
   display: grid;
   grid-template-columns: 110px 1fr;
   gap: 14px;
-  align-items: start;
+  align-items: center;
 }
 
 .team-image {
   width: 110px;
-  height: 110px;
+  aspect-ratio: 1 / 1;
   object-fit: cover;
+  object-position: center top;
   border-radius: 14px;
+  display: block;
+  flex-shrink: 0;
+}
+
+.team-image-link {
+  display: block;
+  width: 110px;
+  border-radius: 14px;
+  overflow: hidden;
+  flex-shrink: 0;
+  cursor: zoom-in;
+}
+
+.image-lightbox {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  overflow: hidden;
+  color: var(--white);
+}
+
+.image-lightbox[hidden] {
+  display: none;
+}
+
+.image-lightbox::backdrop {
+  background: rgba(7, 29, 45, 0.86);
+  backdrop-filter: blur(4px);
+}
+
+.image-lightbox-panel {
+  width: fit-content;
+  height: fit-content;
+  max-width: calc(100vw - 32px);
+  max-height: calc(100vh - 32px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: auto;
+  border-radius: 22px;
+  background: rgba(7, 29, 45, 0.08);
+  box-shadow: 0 22px 54px rgba(7, 29, 45, 0.32);
+  padding: 56px 72px 24px;
+  box-sizing: border-box;
+}
+
+.image-lightbox-image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: calc(100vw - 180px);
+  max-height: calc(100vh - 140px);
+  object-fit: contain;
+}
+
+.image-lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--ink-900);
+  font-size: 34px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(7, 29, 45, 0.26);
+  z-index: 1;
+}
+
+.image-lightbox-nav-prev {
+  left: 16px;
+}
+
+.image-lightbox-nav-next {
+  right: 16px;
 }
 
 .site-footer {
@@ -409,8 +519,12 @@ body {
     padding: 12px;
   }
 
+  .nav-logo {
+    height: 32px;
+  }
+
   .nav-brand {
-    font-size: 18px;
+    padding: 5px 10px;
   }
 
   .hero {
@@ -433,8 +547,6 @@ body {
   }
 
   .team-image {
-    width: 100%;
-    max-width: 220px;
-    height: auto;
+    width: min(220px, 100%);
   }
 }

@@ -16,11 +16,15 @@ function classifyTitle(title) {
     return "Postdoctoral Researchers";
   }
 
-  if (normalized.includes("pi") || normalized.includes("faculty") || normalized.includes("specialist")) {
+  if (normalized.includes("pi") || normalized.includes("faculty") || normalized.includes("specialist faculty")) {
     return "Faculty";
   }
 
-  if (normalized.includes("analyst") || normalized.includes("staff") || normalized.includes("specialist") || normalized.includes("engineer") || normalized.includes("researcher")) {
+  if (normalized.includes("specialist")) {
+    return "Specialists";
+  }
+
+  if (normalized.includes("analyst") || normalized.includes("staff") || normalized.includes("engineer") || normalized.includes("researcher")) {
     return "Research Staff";
   }
 
@@ -56,6 +60,7 @@ module.exports = () => {
 
   const order = [
     "Faculty",
+    "Specialists",
     "Postdoctoral Researchers",
     "Graduate Students",
     "Undergraduate Students",

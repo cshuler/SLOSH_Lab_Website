@@ -1,6 +1,12 @@
 const fs = require("fs");
 const { parse } = require("csv-parse/sync");
 
+const publicationTopics = [
+  "Groundwater & Coastal Systems",
+  "Nutrient Loading & Reef Impacts",
+  "Climate Change & Sea Level Rise"
+];
+
 function normalizePublication(row) {
   const title = row.Title || row.title || "Untitled publication";
   const details = row.Details || row.details || "";
@@ -20,7 +26,11 @@ module.exports = () => {
   const filePath = __dirname + "/publications.csv";
 
   if (!fs.existsSync(filePath)) {
-    return [];
+    return publicationTopics.map((topic) => ({
+      id: topic.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""),
+      label: topic,
+      items: []
+    }));
   }
 
   const file = fs.readFileSync(filePath);
@@ -30,7 +40,7 @@ module.exports = () => {
   }).map(normalizePublication);
 
   const grouped = rows.reduce((acc, row) => {
-    const key = row.topic.trim() || "General";
+    const key = publicationTopics.includes(row.topic.trim()) ? row.topic.trim() : publicationTopics[0];
     if (!acc[key]) {
       acc[key] = [];
     }
@@ -41,11 +51,9 @@ module.exports = () => {
     return acc;
   }, {});
 
-  return Object.keys(grouped)
-    .sort((a, b) => b.localeCompare(a, undefined, { numeric: true }))
-    .map((topic) => ({
-      id: topic.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""),
-      label: topic,
-      items: grouped[topic]
-    }));
+  return publicationTopics.map((topic) => ({
+    id: topic.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""),
+    label: topic,
+    items: grouped[topic] || []
+  }));
 };

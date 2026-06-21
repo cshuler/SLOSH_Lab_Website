@@ -2,7 +2,9 @@
 
 <div class="site-wrap">
   <nav class="site-nav">
-    <a href="../" class="nav-brand">SLOSH LAB</a>
+    <a href="../" class="nav-brand" aria-label="SLOSH Lab home">
+      <img src="{{ '/images/logo/SLOSH_Logo.png' | url }}" alt="SLOSH Lab" class="nav-logo">
+    </a>
     <div class="nav-links">
       <a href="../">Home</a>
       <a href="../projects/">Projects</a>
@@ -15,10 +17,9 @@
   <main class="page-main">
     <section class="section">
       <h1>Publications</h1>
-      <p class="section-subtitle">Browse outputs by topic or year with quick navigation.</p>
+      <p class="section-subtitle">Use the topic links below to jump through the publication list.</p>
 
-      {% if publicationGroups and publicationGroups.length %}
-      <div class="pill-row" style="margin-bottom: 26px;">
+      <div class="pill-row publication-topic-nav">
         {% for group in publicationGroups %}
         <a class="pill" href="#{{ group.id }}">{{ group.label }}</a>
         {% endfor %}
@@ -27,7 +28,9 @@
       {% for group in publicationGroups %}
       <section id="{{ group.id }}" class="publication-section">
         <h2 class="divider-title">{{ group.label }}</h2>
+
         <div class="publication-list">
+          {% if group.items and group.items.length %}
           {% for item in group.items %}
           <article class="publication-item">
             <h3>{{ item.title }}</h3>
@@ -38,17 +41,15 @@
             {% endif %}
           </article>
           {% endfor %}
+          {% else %}
+          <article class="publication-item">
+            <h3>Coming soon</h3>
+            <p class="muted">Publications for this topic will appear here.</p>
+          </article>
+          {% endif %}
         </div>
       </section>
       {% endfor %}
-      {% else %}
-      <article class="card">
-        <h3>Publication list in progress</h3>
-        <p>
-          
-        </p>
-      </article>
-      {% endif %}
     </section>
   </main>
 </div>

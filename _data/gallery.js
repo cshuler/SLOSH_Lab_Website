@@ -1,44 +1,54 @@
-module.exports = [
-  {
-    title: "Flood sensor deployment in Windward Oahu",
-    caption: "Setting up field equipment and quality checks with local partners before rainfall events.",
-    image: "https://images.unsplash.com/photo-1472396961693-142e6e269027?auto=format&fit=crop&w=1200&q=80",
-    project: "Hawaii Mesonet",
-    projectUrl: "/projects/"
-  },
-  {
-    title: "Community mapping session",
-    caption: "Co-developing watershed risk maps and priority indicators with neighborhood practitioners.",
-    image: "",
-    project: "Wastewater Overlay",
-    projectUrl: "/projects/"
-  },
-  {
-    title: "Coastal field observations",
-    caption: "Rapid observations linking stream outflow, rainfall intensity, and coastal water quality.",
-    image: "https://images.unsplash.com/photo-1439066615861-d1af74d74000?auto=format&fit=crop&w=1200&q=80",
-    project: "American Samoa Climate Data Portal",
-    projectUrl: "/projects/"
-  },
-  {
-    title: "Modeling workflow review",
-    caption: "Team sync on geospatial overlays used to prioritize infrastructure interventions.",
-    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1200&q=80",
-    project: "Wastewater Overlay",
-    projectUrl: "/projects/"
-  },
-  {
-    title: "Local adaptation workshop",
-    caption: "Bringing data products into planning conversations with educators and local agencies.",
-    image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1200&q=80",
-    project: "American Samoa Climate Data Portal",
-    projectUrl: "/projects/"
-  },
-  {
-    title: "Stream camera test capture",
-    caption: "Testing computer vision pipelines for flow-state classification and flood detection.",
-    image: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1200&q=80",
-    project: "Hawaii Mesonet",
-    projectUrl: "/projects/"
-  }
-];
+const fs = require("fs");
+const path = require("path");
+
+const galleryRoot = path.join(__dirname, "..", "images", "gallery");
+const imageExtensions = new Set([".jpg", ".jpeg", ".png", ".gif", ".webp", ".bmp", ".heic", ".heif"]);
+
+function isImageFile(fileName) {
+  return imageExtensions.has(path.extname(fileName).toLowerCase());
+}
+
+function toGalleryUrl(filePath) {
+  const relativePath = path.relative(path.join(__dirname, ".."), filePath).split(path.sep).join("/");
+  return `/${relativePath}`;
+}
+
+function getAltText(fileName) {
+  return path.basename(fileName, path.extname(fileName)).replace(/[._-]+/g, " ").replace(/\s+/g, " ").trim();
+}
+
+function collectSection(directoryPath, title) {
+  const entries = fs.readdirSync(directoryPath, { withFileTypes: true });
+  const items = entries
+    .filter((entry) => entry.isFile() && isImageFile(entry.name))
+    .map((entry) => {
+      const filePath = path.join(directoryPath, entry.name);
+
+      return {
+        src: toGalleryUrl(filePath),
+        alt: getAltText(entry.name) || title || "Gallery image",
+      };
+    })
+    .sort((left, right) => left.alt.localeCompare(right.alt));
+
+  return items.length > 0 ? { title, items } : null;
+}
+
+function collectGallerySections(directoryPath, relativeDir = "") {
+  const entries = fs.readdirSync(directoryPath, { withFileTypes: true });
+  const fileSection = collectSection(directoryPath, relativeDir ? relativeDir : null);
+  const childSections = entries
+    .filter((entry) => entry.isDirectory())
+    .map((entry) => {
+      const childDirectoryPath = path.join(directoryPath, entry.name);
+      const childRelativeDir = relativeDir ? path.join(relativeDir, entry.name) : entry.name;
+
+      return collectGallerySections(childDirectoryPath, childRelativeDir);
+    })
+    .flat()
+    .filter(Boolean);
+
+  return [fileSection, ...childSections].filter(Boolean);
+}
+
+module.exports = collectGallerySections(galleryRoot);
