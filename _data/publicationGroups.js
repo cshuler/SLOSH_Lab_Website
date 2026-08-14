@@ -9,16 +9,22 @@ const publicationTopics = [
 
 function normalizePublication(row) {
   const title = row.Title || row.title || "Untitled publication";
-  const details = row.Details || row.details || "";
+  const citation = row.Citation || row.citation || "";
+  const link = row["Link/DOI"] || row["Link/doi"] || row.link || "";
+  const description = row.Subject || row.subject || "";
+  const details = row.Details || row.details || citation || "";
   const explicitTopic = row.Topic || row.topic || "";
   const explicitYear = row.Year || row.year || "";
-  const yearInDetails = details.match(/(19|20)\d{2}/);
-  const year = explicitYear || (yearInDetails ? yearInDetails[0] : "");
+  const yearsInDetails = [...details.matchAll(/(19|20)\d{2}/g)].map((match) => Number(match[0]));
+  const year = explicitYear || (yearsInDetails.length ? String(Math.max(...yearsInDetails)) : "");
 
   return {
     title,
+    description,
     details,
-    topic: explicitTopic || (year ? String(year) : "General")
+    link,
+    topic: explicitTopic || (year ? String(year) : "General"),
+    year
   };
 }
 
@@ -46,10 +52,22 @@ module.exports = () => {
     }
     acc[key].push({
       title: row.title,
-      details: row.details
+      description: row.description,
+      details: row.details,
+      link: row.link,
+      year: row.year
     });
     return acc;
   }, {});
+
+  for (const topic of publicationTopics) {
+    const items = grouped[topic] || [];
+    grouped[topic] = items.sort((left, right) => {
+      const leftYear = Number(left.year) || 0;
+      const rightYear = Number(right.year) || 0;
+      return rightYear - leftYear;
+    });
+  }
 
   return publicationTopics.map((topic) => ({
     id: topic.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""),

@@ -34,10 +34,18 @@
           {% for item in group.items %}
           <article class="publication-item">
             <h3>{{ item.title }}</h3>
+            {% if item.description %}
+            <p class="publication-description">{{ item.description }}</p>
+            {% endif %}
             {% if item.details %}
-            <p>{{ item.details }}</p>
+            <p class="publication-citation">{{ item.details }}</p>
             {% else %}
             <p class="muted">Details coming soon.</p>
+            {% endif %}
+            {% if item.link %}
+            <div class="publication-actions">
+              <a class="button button-primary" href="{{ item.link }}" target="_blank" rel="noopener noreferrer">Read more</a>
+            </div>
             {% endif %}
           </article>
           {% endfor %}

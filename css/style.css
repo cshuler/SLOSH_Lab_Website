@@ -303,6 +303,21 @@ body {
   padding: 16px;
 }
 
+.publication-description {
+  margin: 0 0 8px;
+  color: var(--ink-700);
+  font-weight: 600;
+}
+
+.publication-citation {
+  margin: 0;
+  color: var(--ink-700);
+}
+
+.publication-actions {
+  margin-top: 14px;
+}
+
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
