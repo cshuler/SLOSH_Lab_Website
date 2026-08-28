@@ -34,25 +34,30 @@ function classifyTitle(title) {
 module.exports = () => {
   const file = fs.readFileSync(__dirname + "/team.csv");
   const rows = parse(file, {
-    columns: true,
-    skip_empty_lines: true
+    columns: (header) => header.map((field) => String(field).trim()),
+    skip_empty_lines: true,
+    bom: true
   });
 
   const groups = rows.reduce((acc, row) => {
     const title = row.Title || "Team member";
-    const groupName = classifyTitle(title);
+    const rawGroup = (row.Group || row.group || "").trim();
+    const groupName = rawGroup || classifyTitle(title);
+    const status = (row.Status || row.status || "Current").trim();
+    const sectionName = status === "Former" ? `Former ${groupName}` : groupName;
 
-    if (!acc[groupName]) {
-      acc[groupName] = [];
+    if (!acc[sectionName]) {
+      acc[sectionName] = [];
     }
 
-    acc[groupName].push({
+    acc[sectionName].push({
       firstName: (row["First Name"] || "").trim(),
       lastName: (row["Last Name"] || "").trim(),
       title,
       description: row.Description || "",
       linkedIn: row.LinkedIn || "",
-      image: row.Image || ""
+      image: row.Image || "",
+      status
     });
 
     return acc;
@@ -65,7 +70,14 @@ module.exports = () => {
     "Graduate Students",
     "Undergraduate Students",
     "Research Staff",
-    "Affiliates"
+    "Affiliates",
+    "Former Faculty",
+    "Former Specialists",
+    "Former Postdoctoral Researchers",
+    "Former Graduate Students",
+    "Former Undergraduate Students",
+    "Former Research Staff",
+    "Former Affiliates"
   ];
 
   return order

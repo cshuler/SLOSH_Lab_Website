@@ -1,20 +1,46 @@
 const fs = require("fs");
 const { parse } = require("csv-parse/sync");
 
-const publicationTopics = [
-  "Groundwater & Coastal Systems",
-  "Nutrient Loading & Reef Impacts",
-  "Climate Change & Sea Level Rise"
-];
+function loadThemes() {
+  const filePath = __dirname + "/ResearchThemes.csv";
+
+  if (!fs.existsSync(filePath)) {
+    return [];
+  }
+
+  const rows = parse(fs.readFileSync(filePath), {
+    columns: true,
+    skip_empty_lines: true
+  });
+
+  return rows
+    .map((row) => {
+      const key = Object.keys(row).find((field) => field && field.trim().toLowerCase() === "research_theme");
+      const value = key ? row[key] : "";
+      return typeof value === "string" ? value.trim() : "";
+    })
+    .filter(Boolean);
+}
+
+function getValue(row, keys) {
+  for (const key of keys) {
+    const matchingKey = Object.keys(row).find((rowKey) => rowKey && rowKey.trim() === key);
+    if (matchingKey !== undefined && row[matchingKey] !== undefined && row[matchingKey] !== null) {
+      const value = String(row[matchingKey]).trim();
+      if (value) return value;
+    }
+  }
+  return "";
+}
 
 function normalizePublication(row) {
-  const title = row.Title || row.title || "Untitled publication";
-  const citation = row.Citation || row.citation || "";
-  const link = row["Link/DOI"] || row["Link/doi"] || row.link || "";
-  const description = row.Subject || row.subject || "";
-  const details = row.Details || row.details || citation || "";
-  const explicitTopic = row.Topic || row.topic || "";
-  const explicitYear = row.Year || row.year || "";
+  const title = getValue(row, ["Title", "title"]) || "Untitled publication";
+  const citation = getValue(row, ["Citation", "citation"]) || "";
+  const link = getValue(row, ["Link/DOI", "Link/doi", "link"]) || "";
+  const description = getValue(row, ["Description", "description", "Subject", "subject"]) || "";
+  const details = getValue(row, ["Details", "details"]) || citation || "";
+  const explicitTopic = getValue(row, ["Research_Theme", "Research Theme", "Theme", "theme", "Topic", "topic"]) || "";
+  const explicitYear = getValue(row, ["Year", "year"]) || "";
   const yearsInDetails = [...details.matchAll(/(19|20)\d{2}/g)].map((match) => Number(match[0]));
   const year = explicitYear || (yearsInDetails.length ? String(Math.max(...yearsInDetails)) : "");
 
@@ -30,6 +56,7 @@ function normalizePublication(row) {
 
 module.exports = () => {
   const filePath = __dirname + "/publications.csv";
+  const publicationTopics = loadThemes();
 
   if (!fs.existsSync(filePath)) {
     return publicationTopics.map((topic) => ({
@@ -41,12 +68,14 @@ module.exports = () => {
 
   const file = fs.readFileSync(filePath);
   const rows = parse(file, {
-    columns: true,
-    skip_empty_lines: true
+    columns: (header) => header.map((field) => String(field).trim()),
+    skip_empty_lines: true,
+    bom: true
   }).map(normalizePublication);
 
   const grouped = rows.reduce((acc, row) => {
-    const key = publicationTopics.includes(row.topic.trim()) ? row.topic.trim() : publicationTopics[0];
+    const normalizedTopic = row.topic.trim();
+    const key = publicationTopics.includes(normalizedTopic) ? normalizedTopic : (publicationTopics[0] || "General");
     if (!acc[key]) {
       acc[key] = [];
     }

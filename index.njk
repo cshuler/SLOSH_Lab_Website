@@ -47,12 +47,9 @@
             <aside class="surface-card">
                 <h2>Focus areas</h2>
                 <div class="pill-row">
-                    <span class="pill">Flood Risk Intelligence</span>
-                    <span class="pill">Climate Data Access</span>
-                    <span class="pill">Water Quality & Infrastructure</span>
-                    <span class="pill">GIS Decision Support</span>
-                    <span class="pill">Community Partnerships</span>
-                    <span class="pill">Open Reproducible Science</span>
+                    {% for theme in researchThemes %}
+                    <a class="pill pill-button" href="publications/#{{ theme | slugify }}">{{ theme }}</a>
+                    {% endfor %}
                 </div>
             </aside>
         </section>
