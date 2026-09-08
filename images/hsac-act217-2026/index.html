@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b6875">
+  <meta name="description" content="Presentation slides: The Hawaiʻi Cesspool Prioritization Tool and the Act 217 Sewer Expansion Overlay, Christopher K. Shuler, September 2026.">
+  <title>Act 217 Sewer Expansion Overlay | Christopher K. Shuler</title>
+  <style>
+    :root {
+      --ink: #16343a;
+      --muted: #5a6d70;
+      --ocean: #0b6875;
+      --ocean-dark: #084c56;
+      --sand: #f5eee3;
+      --orange: #b75a00;
+      --paper: #ffffff;
+      --line: rgba(22, 52, 58, 0.13);
+      --shadow: 0 22px 55px rgba(18, 50, 57, 0.16);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 0%, rgba(91, 191, 201, 0.22), transparent 32rem),
+        linear-gradient(180deg, #edf8f8 0%, #f8fbfa 45%, var(--sand) 100%);
+      line-height: 1.5;
+    }
+
+    .wrap {
+      width: min(1080px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 54px 0 38px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--ocean-dark);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 26px;
+    }
+
+    .brand::before {
+      content: "";
+      width: 34px;
+      height: 3px;
+      border-radius: 999px;
+      background: var(--orange);
+    }
+
+    .card {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .content {
+      padding: clamp(30px, 5vw, 62px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .eyebrow {
+      margin: 0 0 13px;
+      color: var(--orange);
+      font-weight: 800;
+      font-size: 0.88rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 4.4vw, 4rem);
+      line-height: 1.03;
+      letter-spacing: -0.045em;
+      margin: 0;
+      max-width: 14ch;
+    }
+
+    .sub {
+      margin: 22px 0 0;
+      max-width: 42rem;
+      color: var(--muted);
+      font-size: clamp(1rem, 1.5vw, 1.13rem);
+    }
+
+    .meta {
+      margin: 25px 0 0;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+      font-size: 0.97rem;
+    }
+
+    .meta strong { color: var(--ink); }
+    .meta span { color: var(--muted); }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 50px;
+      padding: 0 21px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 800;
+      transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+    }
+
+    .btn:hover { transform: translateY(-1px); }
+
+    .primary {
+      color: #fff;
+      background: var(--ocean);
+      box-shadow: 0 8px 20px rgba(11, 104, 117, 0.22);
+    }
+
+    .primary:hover { background: var(--ocean-dark); }
+
+    .secondary {
+      color: var(--ocean-dark);
+      background: #eef6f6;
+      border: 1px solid rgba(11, 104, 117, 0.17);
+    }
+
+    .preview {
+      position: relative;
+      min-height: 500px;
+      background: #d9edef;
+    }
+
+    .preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .preview::after {
+      content: "25-slide PDF";
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      color: white;
+      background: rgba(8, 76, 86, 0.88);
+      backdrop-filter: blur(6px);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+    }
+
+    .note {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 28px;
+      align-items: center;
+      padding: 26px 4px 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .note p { margin: 0; max-width: 760px; }
+    .note a { color: var(--ocean-dark); font-weight: 700; }
+
+    @media (max-width: 780px) {
+      .wrap { padding-top: 28px; }
+      .card { grid-template-columns: 1fr; }
+      .preview { min-height: 0; aspect-ratio: 16 / 9; order: -1; }
+      .content { padding: 30px 25px 34px; }
+      h1 { max-width: none; }
+      .btn { width: 100%; }
+      .note { grid-template-columns: 1fr; gap: 10px; padding-inline: 2px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="brand">SLOSH Lab presentation</div>
+
+    <section class="card" aria-labelledby="page-title">
+      <div class="content">
+        <p class="eyebrow">HSAC · September 2026</p>
+        <h1 id="page-title">The Hawaiʻi Cesspool Prioritization Tool and the Act 217 Sewer Expansion Overlay</h1>
+        <p class="sub">Presentation slides on statewide cesspool prioritization, sewer expansion feasibility, planning status, relative costs, and lessons learned.</p>
+
+        <div class="meta">
+          <strong>Christopher K. Shuler</strong><br>
+          <span>University of Hawaiʻi Water Resources Research Center<br>University of Hawaiʻi Sea Grant College Program</span>
+        </div>
+
+        <div class="buttons">
+          <a class="btn primary" href="Shuler_Act217_HSAC_Presentation_Sep2026.pdf" target="_blank" rel="noopener">View presentation</a>
+          <a class="btn secondary" href="Shuler_Act217_HSAC_Presentation_Sep2026.pdf" download>Download PDF</a>
+        </div>
+      </div>
+
+      <div class="preview">
+        <img src="cover.jpg" alt="Title slide for The Hawaiʻi Cesspool Prioritization Tool and the Act 217 Sewer Expansion Overlay">
+      </div>
+    </section>
+
+    <div class="note">
+      <p>The PDF is approximately 6.5 MB. If it does not open inside your phone's browser, use <strong>Download PDF</strong> above.</p>
+      <a href="mailto:cshuler@hawaii.edu">cshuler@hawaii.edu</a>
+    </div>
+  </main>
+</body>
+</html>
