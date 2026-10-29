@@ -582,3 +582,86 @@ body {
     width: min(220px, 100%);
   }
 }
+/* ------------------------------------------------------------------
+   SLOSH Projects page: featured images, project rows, and responsive layout.
+   Scoped to project-specific classes to avoid changing other pages.
+   ------------------------------------------------------------------ */
+
+/* Give project section headings clear separation from the preceding cards.
+   This overrides the generic .section h2 margin-top reset. */
+.projects-page h2.divider-title {
+  margin: 42px 0 22px;
+}
+
+/* Prevent the shared .card + .card rule from stair-stepping grid cards. */
+.projects-featured-grid .card + .card,
+.projects-list-grid .card + .card {
+  margin-top: 0;
+}
+
+.projects-featured-grid .featured-project {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* Featured project photo directly below the title. */
+.project-feature-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 12px;
+  margin: 2px 0 14px;
+}
+
+/* Shared project metadata and action spacing. */
+.card .project-team {
+  margin-top: 10px;
+}
+
+.project-actions {
+  margin-top: 12px;
+}
+
+.featured-project .project-actions {
+  margin-top: auto;
+  padding-top: 14px;
+}
+
+/* Archive cards are full-width unless a photo has been provided. */
+.project-list-card {
+  min-width: 0;
+}
+
+.project-list-card.has-photo {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 220px;
+  align-items: center;
+  gap: 24px;
+}
+
+.project-list-body {
+  min-width: 0;
+}
+
+/* Compact right-side image for Current and Former projects. */
+.project-list-image {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+@media (max-width: 680px) {
+  .project-list-card.has-photo {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .project-list-image {
+    aspect-ratio: 16 / 9;
+    max-height: 260px;
+  }
+}

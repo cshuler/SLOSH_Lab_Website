@@ -1,3 +1,63 @@
+{#
+  SLOSH Lab Projects page
+  CSV status values: Long-Running, Current, Former.
+  Only the first three Long-Running projects appear in the featured cards;
+  any additional Long-Running entries go in Current Projects instead.
+  Blank or unrecognized statuses also appear under Current Projects,
+  so projects are never silently omitted.
+  Photo(s) is one repository-relative image path, e.g. images/projects/mesonet.jpg
+#}
+
+{# Divide the projects into mutually exclusive groups. #}
+{% set featuredProjects = [] %}
+{% set currentProjects = [] %}
+{% set formerProjects = [] %}
+
+{% for row in projects %}
+  {% set status = (row["Status"] or "Current") | trim | lower %}
+  {% if status == "long-running" or status == "long running" or status == "long_running" %}
+    {% if featuredProjects.length < 3 %}
+      {% set ignored = featuredProjects.push(row) %}
+    {% else %}
+      {% set ignored = currentProjects.push(row) %}
+    {% endif %}
+  {% elif status == "former" %}
+    {% set ignored = formerProjects.push(row) %}
+  {% else %}
+    {% set ignored = currentProjects.push(row) %}
+  {% endif %}
+{% endfor %}
+
+{# Shared markup for both Current and Former project rows. #}
+{% macro projectListCard(row) %}
+  {% set photo = (row["Photo(s)"] or "") | trim %}
+  <article class="card project-list-card{% if photo %} has-photo{% endif %}">
+    <div class="project-list-body">
+      <h3>{{ row["Project name"] or "Untitled project" }}</h3>
+      {% if row["Description"] %}
+        <p>{{ row["Description"] }}</p>
+      {% else %}
+        <p class="muted">Description coming soon.</p>
+      {% endif %}
+
+      {% if row["Team members"] %}
+        <p class="muted project-team"><strong>Team members:</strong> {{ row["Team members"] }}</p>
+      {% endif %}
+
+      {% if row["Relevant links"] %}
+        <div class="project-actions"><a class="pill" href="{{ row['Relevant links'] }}">Project link</a></div>
+      {% endif %}
+    </div>
+
+    {% if photo %}
+      <img class="project-list-image"
+           src="{{ ('/' + photo) | url }}"
+           alt="Image for {{ row['Project name'] or 'project' }}"
+           loading="lazy" decoding="async">
+    {% endif %}
+  </article>
+{% endmacro %}
+
 <link rel="stylesheet" href="../css/style.css">
 
 <div class="site-wrap">
@@ -15,55 +75,60 @@
   </nav>
 
   <main class="page-main">
-    <section class="section">
+    <section class="section projects-page">
       <h1>Projects</h1>
       <p class="section-subtitle">Long-running initiatives and our full project archive.</p>
 
+      {% if featuredProjects.length %}
       <h2 class="divider-title">Long-running projects</h2>
-      <div class="grid grid-3">
-        {% for row in projects %}
-        {% if loop.index <= 3 %}
+      <div class="grid grid-3 projects-featured-grid">
+        {% for row in featuredProjects %}
+        {% set photo = (row["Photo(s)"] or "") | trim %}
         <article class="card featured-project">
           <h3>{{ row["Project name"] or "Project in development" }}</h3>
-          <p>
-            {% if row["Description"] %}
-              {{ row["Description"] }}
-            {% else %}
-              Active collaboration focused on applied science tools for water resilience in Hawaii and the Pacific.
-            {% endif %}
-          </p>
-          {% if row["Team members"] %}
-          <p class="muted" style="margin-top: 12px;"><strong>Team:</strong> {{ row["Team members"] }}</p>
-          {% endif %}
-          {% if row["Relevant links"] %}
-          <p style="margin-top: 12px;"><a class="pill" href="{{ row["Relevant links"] }}">Learn more</a></p>
-          {% endif %}
-        </article>
-        {% endif %}
-        {% endfor %}
-      </div>
 
-      <h2 class="divider-title">All current and previous projects</h2>
-      <div class="grid">
-        {% for row in projects %}
-        <article class="card">
-          <h3>{{ row["Project name"] or "Untitled project" }}</h3>
+          {% if photo %}
+            <img class="project-feature-image"
+                 src="{{ ('/' + photo) | url }}"
+                 alt="Image for {{ row['Project name'] or 'project' }}"
+                 loading="eager" decoding="async">
+          {% endif %}
+
           {% if row["Description"] %}
-          <p>{{ row["Description"] }}</p>
+            <p>{{ row["Description"] }}</p>
           {% else %}
-          <p class="muted">Description coming soon.</p>
+            <p class="muted">Description coming soon.</p>
           {% endif %}
 
           {% if row["Team members"] %}
-          <p class="muted" style="margin-top: 8px;"><strong>Team members:</strong> {{ row["Team members"] }}</p>
+            <p class="muted project-team"><strong>Team:</strong> {{ row["Team members"] }}</p>
           {% endif %}
 
           {% if row["Relevant links"] %}
-          <p style="margin-top: 12px;"><a class="pill" href="{{ row["Relevant links"] }}">Project link</a></p>
+            <div class="project-actions"><a class="pill" href="{{ row['Relevant links'] }}">Learn more</a></div>
           {% endif %}
         </article>
         {% endfor %}
       </div>
+      {% endif %}
+
+      {% if currentProjects.length %}
+      <h2 class="divider-title">Current projects</h2>
+      <div class="grid projects-list-grid">
+        {% for row in currentProjects %}
+          {{ projectListCard(row) }}
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      {% if formerProjects.length %}
+      <h2 class="divider-title">Former projects</h2>
+      <div class="grid projects-list-grid">
+        {% for row in formerProjects %}
+          {{ projectListCard(row) }}
+        {% endfor %}
+      </div>
+      {% endif %}
     </section>
   </main>
 </div>
