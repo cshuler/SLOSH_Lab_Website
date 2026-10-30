@@ -10,15 +10,16 @@ Help build and maintain a statewide network of research-grade weather stations. 
 
 ## What you’ll do
 
-- **Keep stations running.** Install, maintain, calibrate, and repair weather sensors, dataloggers, solar power systems, and cellular communications.
-- **Figure out what went wrong.** Use live observations and site visits to diagnose failed sensors, power problems, communications outages, and data gaps.
-- **Make the network better.** Maintain station programs, test hardware improvements, and support automated data-quality checks.
-- **Make fieldwork happen.** Plan trips, track equipment and calibration records, work with site hosts on access and permits, and train student helpers.
+- **Build the network and keep it running.** Install, maintain, calibrate, and repair weather sensors, dataloggers, power systems, and data telemetry. Keep an eye on station performance and diagnostics to spot problems when they happen.
+- **Figure out what went wrong and fix it.** Troubleshoot erroneous sensor readings, communication failures, and missing data. Look at the data remotely, gather information, track down the root of the issue, and be ready to solve it in the field.
+- **Make fieldwork happen and head to the outdoors.** Plan field trips, coordinate logistics and site access, and pack up your tools to visit stations in amazing places. Travel to other islands, drive on unpaved roads, ride in helicopters, climb towers, and hike in the Hawaiian mountains, rain or shine.
+- **Keep things documented and organized.** Update station metadata, manage instrument inventory, track sensor calibration and maintenance schedules, and keep records of issues and station visits to help with data QAQC.
+- **Make the network better.** Work with the team on datalogger programs, equipment improvements and automated data quality checks.
 
 ## What you bring
 
 - **Education and experience.** A bachelor’s degree in atmospheric, environmental, natural-resource or geographic science, engineering, or related field, plus 1–3 years of relevant field experience.
-- **Hands-on aptitude.** Comfort with tools, practical repairs, computers, environmental time-series data, and learning instrument programming software.
+- **Hands-on aptitude.** Comfort with tools, hardware, electronics, computer software, and basic analysis and quality assessment of environmental data. Ability to learn instrument programming software.
 - **Good field judgment.** Ability to work independently, communicate clearly, and operate a manual-transmission 4WD vehicle on rough roads; valid driver’s license required.
 - **Especially useful.** Campbell Scientific/CRBasic, sensor wiring, solar/telemetry, coding, graduate training, rugged deployments, or student mentoring.
 
