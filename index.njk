@@ -1,0 +1,134 @@
+<link rel="stylesheet" href="css/style.css">
+
+<div class="site-wrap">
+    <nav class="site-nav">
+        <a href="./" class="nav-brand" aria-label="SLOSH Lab home">
+            <img src="{{ '/images/logo/SLOSH_Logo.png' | url }}" alt="SLOSH Lab" class="nav-logo">
+        </a>
+        <div class="nav-links">
+            <a href="./" class="active">Home</a>
+            <a href="projects/">Projects</a>
+            <a href="publications/">Publications</a>
+            <a href="gallery/">Gallery</a>
+            <a href="team/">Team</a>
+        </div>
+    </nav>
+
+    <header class="hero" style="background-image: url('https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&w=1600&q=80');">
+        <div class="hero-inner">
+            <p class="hero-kicker">Shuler Lab for Operational Science and Hydrology</p>
+            <h1>Science with communities for resilient Pacific watersheds.</h1>
+            <p>
+                We combine environmental engineering, geospatial analysis, and applied data tools to support
+                climate adaptation, flood readiness, and equitable water decisions across Hawaii and the Pacific.
+            </p>
+            <div class="hero-actions">
+                <a class="button button-primary" href="projects/">Explore Projects</a>
+                <a class="button button-secondary" href="team/">Meet the Team</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="page-main">
+        <section class="section two-col">
+            <article class="surface-card">
+                <h2>Our mission</h2>
+                <p>
+                    SLOSH develops practical, open, and community-centered water science. We work alongside local
+                    partners to turn technical climate, stream, and infrastructure information into tools people can
+                    use for planning and action.
+                </p>
+                <p>
+                    Our projects span machine learning for flood awareness, climate data portals, wastewater planning,
+                    and policy-grounded support for local governance.
+                </p>
+            </article>
+
+            <aside class="surface-card">
+                <h2>Focus areas</h2>
+                <div class="pill-row">
+                    {% for theme in researchThemes %}
+                    <a class="pill pill-button" href="publications/#{{ theme | slugify }}">{{ theme }}</a>
+                    {% endfor %}
+                </div>
+            </aside>
+        </section>
+
+        <section class="section">
+            <h2>Current priorities</h2>
+            <p class="section-subtitle">
+                These themes guide our active collaborations across university, agency, and community partners.
+            </p>
+            <div class="grid grid-3">
+                <article class="card">
+                    <h3>American Samoa climate and hydrology intelligence</h3>
+                    <img
+                        class="priority-photo"
+                        src="{{ '/images/projects/06_IMG-1383.JPG' | url }}"
+                        alt="American Samoa hydrology fieldwork"
+                        loading="lazy"
+                    >
+                    <p>Building accessible dashboards and tools to support adaptation planning.</p>
+                </article>
+                <article class="card">
+                    <h3>Wastewater and watershed planning</h3>
+                    <img
+                        class="priority-photo"
+                        src="{{ '/images/projects/HCPT_15Factors.JPG' | url }}"
+                        alt="Wastewater and watershed planning map"
+                        loading="lazy"
+                    >
+                    <p>Integrating environmental, social, and infrastructure data to prioritize investments.</p>
+                </article>
+                <article class="card">
+                    <h3>AI for environmental monitoring</h3>
+                    <img
+                        class="priority-photo"
+                        src="{{ '/images/projects/File_003.jpeg' | url }}"
+                        alt="Environmental monitoring camera and AI field setup"
+                        loading="lazy"
+                    >
+                    <p>Using camera and sensor data to improve hydrological and climate awareness in real time.</p>
+                </article>
+            </div>
+        </section>
+    </main>
+
+<footer class="site-footer">
+    <div class="footer-inner">
+        <h2 class="footer-title">Thank you to our partners!</h2>
+        <div class="partner-grid">
+            <a href="https://www.noaa.gov/" class="partner-link">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/7/79/NOAA_logo.svg" alt="NOAA" class="partner-logo">
+            </a>
+            <a href="https://www.wrrc.hawaii.edu/ciroh-hawaii/" class="partner-link">
+                <img src="https://www.wrrc.hawaii.edu/wp-content/uploads/2020/12/wrrc-main-logo.svg" alt="WRRC" class="partner-logo">
+            </a>
+            <a href="https://www.aspower.com/Intro.html" class="partner-link">
+                <img src="https://www.aspower.com/img/sidebuttons/aspalogo.png" alt="ASPA" class="partner-logo">
+            </a>
+            <a href="https://www.pacificrisa.org/" class="partner-link">
+                <img src="https://www.pacificrisa.org/wp-content/uploads/2024/08/Pacific_RISA_logo_LONG_white.png" alt="Pacific Risa" class="partner-logo">
+            </a>
+            <a href="https://manoa.hawaii.edu/" class="partner-link">
+                <img src="https://wp.logos-download.com/wp-content/uploads/2021/01/University_of_Hawaii_at_Manoa_Logo-604x700.png" alt="UH Manoa" class="partner-logo">
+            </a>
+            <a href="https://www.ulupono.com/" class="partner-link">
+                <img src="https://www.ulupono.com/media/sw3pxwwe/logo.png" alt="Ulupono" class="partner-logo">
+            </a>
+            <a href="https://www.epa.gov/" class="partner-link">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Seal_of_the_United_States_Environmental_Protection_Agency.svg" alt="EPA" class="partner-logo">
+            </a>
+            <a href="https://cpo.noaa.gov/" class="partner-link">
+                <img src="https://cpo.noaa.gov/wp-content/uploads/2023/05/Climate-Program-Office-768x114.png" alt="NOAA CPO" class="partner-logo">
+            </a>
+            <a href="https://pi-casc.soest.hawaii.edu/" class="partner-link">
+                <img src="https://pi-casc.soest.hawaii.edu/wp-content/uploads/thegem/logos/logo_c4475b813f47281b5812a43b3077c0fb_2x.png" alt="PICASC" class="partner-logo">
+            </a>
+            <a href="https://www.usgs.gov/" class="partner-link">
+                <img src="https://www.usgs.gov/themes/custom/usgs_tantalum/usgs_logo.png" alt="USGS" class="partner-logo">
+            </a>
+        </div>
+    </div>
+</footer>
+</div>
