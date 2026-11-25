@@ -32,7 +32,7 @@ h1 span{white-space:normal;}
 .question-id{font-size:12px;color:var(--muted);margin-bottom:5px;}
 .question h2{font-size:clamp(23px,3.2vw,30px);line-height:1.27;margin-bottom:15px;}
 .question-summary{font-size:16px;line-height:1.7;margin-bottom:0;color:#353b36;}
-.resource{display:grid;grid-template-columns:minmax(0,1fr) 125px;gap:30px;padding:26px 0;border-top:1px solid #e1e4e0;}
+.resource{display:grid;grid-template-columns:minmax(0,1fr) 147px;gap:27px;padding:26px 0;border-top:1px solid #e1e4e0;}
 .resource h3{font-size:17px;font-weight:600;line-height:1.42;margin-bottom:7px;}
 .source-citation{font-size:13px;line-height:1.5;color:var(--muted);margin-bottom:17px;}
 .source-citation p{margin:0 0 3px;}
@@ -43,32 +43,26 @@ h1 span{white-space:normal;}
 .evidence-part li{margin-bottom:5px;padding-left:3px;}
 .evidence-part li:last-child{margin-bottom:0;}
 .resource-previews{display:flex;flex-direction:column;gap:10px;align-items:flex-end;}
-.source-preview{display:block;width:116px;font-size:11px;line-height:1.3;text-decoration:none;text-align:center;color:#45594a;}
-.preview-visual{display:block;width:116px;max-width:100%;overflow:hidden;position:relative;background:#fff;border:1px solid #c8cec7;box-shadow:0 1px 2px #00000012;}
+.source-preview{display:block;width:132px;font-size:11px;line-height:1.3;text-decoration:none;text-align:center;color:#45594a;}
+.preview-visual{display:block;width:132px;max-width:100%;overflow:hidden;position:relative;background:#fff;border:1px solid #c8cec7;box-shadow:0 1px 2px #00000012;}
 .preview-visual img{display:block;width:100%;height:auto;object-fit:contain;}
 .preview-label{display:block;margin-top:5px;text-decoration:underline;text-underline-offset:2px;}
-.pdf-window{display:block;height:151px;width:114px;position:relative;overflow:hidden;background:#fff;}
-.pdf-window iframe{position:absolute;inset:0;width:665px;height:910px;border:0;transform:scale(.1714);transform-origin:0 0;pointer-events:none;z-index:1;background:transparent;}
-.pdf-placeholder{position:absolute;inset:0;display:grid;place-items:center;z-index:0;}
-.page-shape{display:block;width:60px;height:85px;border:1px solid #c2c9c1;background:#fff;position:relative;}
-.page-shape::before{content:"";display:block;height:1px;background:#d9ded8;position:absolute;top:18px;left:10px;right:10px;box-shadow:0 12px 0 #d9ded8,0 24px 0 #d9ded8,0 36px 0 #d9ded8;}
-.site-preview{display:grid;place-items:center;}
-.site-preview .source-word{position:absolute;font-size:11px;color:#676e67;background:#fff;padding:3px;}
 .end-note{margin:48px 0 60px;padding:0 0 0 20px;border-left:2px solid var(--line);}
 .end-note h2{font-size:23px;line-height:1.3;margin-bottom:8px;}.end-note p{margin:0;max-width:660px;}
 .footer{border-top:1px solid var(--line);color:var(--muted);font-size:12px;}
 .footer .container{display:flex;justify-content:space-between;gap:20px;padding:22px 0;}
 @media (max-width:650px){
  .container{width:calc(100% - 36px)}.intro{padding-top:35px;}.contribute{padding:21px 20px;margin-bottom:32px;}
- .question{padding-top:33px}.resource{grid-template-columns:minmax(0,1fr) 88px;gap:13px;padding:21px 0;}
- .resource h3{font-size:15px}.resource-previews,.source-preview,.preview-visual{width:88px}
- .pdf-window{width:86px;height:116px;}.pdf-window iframe{transform:scale(.1293)}.evidence-part{font-size:13px}.source-citation{font-size:12px}
+ .question{padding-top:33px}.resource{grid-template-columns:minmax(0,1fr) 102px;gap:13px;padding:21px 0;}
+ .resource h3{font-size:15px}.resource-previews,.source-preview,.preview-visual{width:98px}
+.evidence-part{font-size:13px}.source-citation{font-size:12px}
  .footer .container{flex-direction:column;gap:4px;}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 
-/* Honest fallbacks when external PDFs do not permit embedding */
-.pdf-fallback,.no-image{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#677268;font-size:11px;background:#fff;}
-.no-image{position:relative;height:151px;}
-.pdf-window{position:relative;}
-@media(max-width:650px){.no-image{height:116px;}}
+
+/* All thumbnails are locally stored images; no external PDF embeds. */
+.preview-visual img {display:block;width:100%;height:auto;aspect-ratio:auto;object-fit:contain;}
+
+/* Display original report pages in full, without cropping. */
+.preview-visual img {aspect-ratio:auto; object-fit:contain; height:auto;}
